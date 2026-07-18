@@ -16,6 +16,7 @@ from src.scorer import calculate_match_score
 from src.ranker import rank_candidates
 from src.suggestions import generate_resume_suggestions
 from src.report_generator import generate_pdf_report
+from src.dashboard import generate_dashboard
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -226,7 +227,30 @@ def render_resume_uploader():
             use_container_width=True,
             hide_index=True,
         )
+                  # ---------------- Module 9 ----------------
 
+        try:
+            dashboard = generate_dashboard(candidates)
+        except Exception as error:
+            logger.error("Failed to generate dashboard: %s", error)
+            st.error(f"Could not generate dashboard: {error}")
+        else:
+            st.subheader("📊 Screening Dashboard")
+
+            col1, col2 = st.columns(2)
+
+            with col1:
+                st.metric("Total Candidates", dashboard["total_candidates"])
+                st.metric("Highest Score", dashboard["highest_score"])
+                st.metric("Lowest Score", dashboard["lowest_score"])
+
+            with col2:
+                st.metric("Average Score", dashboard["average_score"])
+                st.metric("Top Candidate", dashboard["top_candidate"])
+
+            chart_data = ranking_df.set_index("Resume Name")["Score"]
+
+            st.bar_chart(chart_data)
 
 def main():
     configure_page()
