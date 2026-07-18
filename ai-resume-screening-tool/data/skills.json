@@ -1,0 +1,54 @@
+{
+  "Programming Languages": [
+    "Python", "Java", "C", "C++", "C#", "JavaScript", "TypeScript", "Go",
+    "Rust", "PHP", "Ruby", "Swift", "Kotlin", "Scala", "R", "MATLAB",
+    "Perl", "Dart", "Objective-C", "Julia"
+  ],
+  "Web Development": [
+    "HTML", "CSS", "Bootstrap", "Tailwind CSS", "React", "Angular", "Vue",
+    "Node.js", "Express", "Django", "Flask", "FastAPI", "Next.js", "jQuery",
+    "Redux", "GraphQL", "REST API", "WebSockets", "Spring Boot", "ASP.NET"
+  ],
+  "Databases": [
+    "SQL", "MySQL", "PostgreSQL", "MongoDB", "SQLite", "Redis", "Oracle",
+    "Cassandra", "Firebase", "DynamoDB", "MariaDB", "Elasticsearch", "Neo4j"
+  ],
+  "Machine Learning": [
+    "Machine Learning", "Deep Learning", "TensorFlow", "PyTorch",
+    "Scikit-learn", "OpenCV", "NLP", "Computer Vision", "Generative AI",
+    "LLM", "Keras", "XGBoost", "LightGBM", "Pandas", "NumPy", "Matplotlib",
+    "Seaborn", "Hugging Face", "LangChain", "Reinforcement Learning",
+    "Neural Networks", "Data Mining", "Time Series Analysis"
+  ],
+  "Cloud": [
+    "AWS", "Azure", "Google Cloud", "Docker", "Kubernetes", "Terraform",
+    "Ansible", "CI/CD", "Jenkins", "GitHub Actions", "Heroku", "Serverless",
+    "Cloud Computing", "Nginx", "Apache"
+  ],
+  "Version Control": ["Git", "GitHub", "GitLab", "Bitbucket", "SVN"],
+  "Operating Systems": [
+    "Linux", "Unix", "Windows Server", "Shell Scripting", "Bash"
+  ],
+  "Data Engineering": [
+    "Hadoop", "Spark", "Apache Kafka", "ETL", "Data Warehousing",
+    "Airflow", "Big Data", "Data Pipeline"
+  ],
+  "Mobile Development": [
+    "Android", "iOS", "React Native", "Flutter", "Xamarin"
+  ],
+  "Testing and QA": [
+    "Selenium", "JUnit", "PyTest", "Manual Testing", "Automation Testing",
+    "Postman", "JIRA"
+  ],
+  "Project Management": ["Agile", "Scrum", "Kanban", "Waterfall"],
+  "Design Tools": [
+    "Figma", "Adobe XD", "Photoshop", "Illustrator", "UI/UX Design"
+  ],
+  "General Technical": [
+    "Data Structures", "Algorithms", "Object-Oriented Programming",
+    "Microservices", "System Design", "API Development", "Software Testing",
+    "Networking", "Cybersecurity", "Blockchain", "IoT", "AR/VR", "Excel",
+    "Power BI", "Tableau", "Data Analysis", "Data Visualization",
+    "Statistics", "Business Intelligence", "Data Science", "Business Analysis"
+  ]
+}

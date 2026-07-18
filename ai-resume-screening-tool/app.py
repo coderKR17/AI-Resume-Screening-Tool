@@ -25,6 +25,7 @@ import streamlit as st
 
 from src.parser import PDFExtractionError, extract_text_from_pdf
 from src.preprocessing import preprocess_resume
+from src.skill_extractor import extract_skills
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -90,7 +91,7 @@ def render_resume_uploader() -> None:
             disabled=True,
         )
 
-    # --- Module 3: Text Preprocessing -----------------------------
+    # -------- Module 3: Text Preprocessing --------
     with st.spinner("Cleaning resume text..."):
         try:
             cleaned_text = preprocess_resume(extracted_text)
@@ -110,6 +111,28 @@ def render_resume_uploader() -> None:
             height=400,
             disabled=True,
         )
+
+    # -------- Module 4: Skill Extraction --------
+    st.subheader("Extracted Skills")
+
+    with st.spinner("Detecting technical skills..."):
+        try:
+            detected_skills = extract_skills(cleaned_text)
+        except (FileNotFoundError, ValueError) as error:
+            logger.error("Skill extraction failed: %s", error)
+            st.error(f"Could not load the skills database: {error}")
+            return
+        except Exception:
+            logger.exception("Unexpected error during skill extraction.")
+            st.error("An unexpected error occurred while detecting skills.")
+            return
+
+    if not detected_skills:
+        st.warning("No technical skills detected.")
+        return
+
+    for skill in detected_skills:
+        st.success(skill)
 
 
 def main() -> None:
