@@ -15,6 +15,7 @@ from src.skill_extractor import extract_skills
 from src.scorer import calculate_match_score
 from src.ranker import rank_candidates
 from src.suggestions import generate_resume_suggestions
+from src.report_generator import generate_pdf_report
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -165,6 +166,28 @@ def render_resume_uploader():
 
             for suggestion in suggestions:
                 st.info(f"💡 {suggestion}")
+                        # ---------------- Module 8 ----------------
+
+        try:
+            pdf_bytes = generate_pdf_report(
+                candidate_name=uploaded_file.name,
+                score=score,
+                matched_skills=matched_skills,
+                missing_skills=missing_skills,
+                suggestions=suggestions,
+                rank=None,
+            )
+
+            st.download_button(
+                label="📄 Download PDF Report",
+                data=pdf_bytes,
+                file_name=f"{uploaded_file.name}_Report.pdf",
+                mime="application/pdf",
+            )
+
+        except Exception as error:
+            logger.error("Failed to generate PDF report: %s", error)
+            st.error(f"Could not generate PDF report: {error}")
 
         # Candidate list for Module 6
         candidates.append(
