@@ -17,6 +17,7 @@ from src.ranker import rank_candidates
 from src.suggestions import generate_resume_suggestions
 from src.report_generator import generate_pdf_report
 from src.dashboard import generate_dashboard
+from src.exporter import export_results_to_csv
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -251,7 +252,22 @@ def render_resume_uploader():
             chart_data = ranking_df.set_index("Resume Name")["Score"]
 
             st.bar_chart(chart_data)
+                      
 
+            # ---------------- Module 10 ----------------
+
+            try:
+                csv_bytes = export_results_to_csv(ranked_candidates)
+            except Exception as error:
+                logger.error("Failed to export CSV: %s", error)
+                st.error(f"Could not export CSV: {error}")
+            else:
+                st.download_button(
+                    label="📥 Download CSV Report",
+                    data=csv_bytes,
+                    file_name="screening_results.csv",
+                    mime="text/csv",
+                )  
 def main():
     configure_page()
     render_title()
