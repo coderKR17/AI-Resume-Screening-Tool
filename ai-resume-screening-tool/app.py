@@ -6,14 +6,15 @@ AI Resume Screening Tool
 
 import logging
 
+import pandas as pd
 import streamlit as st
 
 from src.parser import PDFExtractionError, extract_text_from_pdf
 from src.preprocessing import preprocess_resume
 from src.skill_extractor import extract_skills
 from src.scorer import calculate_match_score
-import pandas as pd
 from src.ranker import rank_candidates
+from src.suggestions import generate_resume_suggestions
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -91,7 +92,7 @@ def render_resume_uploader():
                 height=350,
                 disabled=True,
             )
-                   # ---------------- Module 3 ----------------
+          # ---------------- Module 3 ----------------
 
         with st.spinner("Cleaning resume..."):
             cleaned_text = preprocess_resume(extracted_text)
@@ -110,8 +111,8 @@ def render_resume_uploader():
 
         try:
             detected_skills = extract_skills(cleaned_text)
-        except Exception as e:
-            st.error(e)
+        except Exception as error:
+            st.error(error)
             continue
 
         if detected_skills:
@@ -148,6 +149,22 @@ def render_resume_uploader():
                 st.error(f"❌ {skill}")
         else:
             st.success("All required skills matched.")
+                 # ---------------- Module 7 ----------------
+
+        try:
+            suggestions = generate_resume_suggestions(
+                score,
+                matched_skills,
+                missing_skills,
+            )
+        except TypeError as error:
+            logger.error("Failed to generate resume suggestions: %s", error)
+            st.error(f"Could not generate resume suggestions: {error}")
+        else:
+            st.subheader("💡 Resume Improvement Suggestions")
+
+            for suggestion in suggestions:
+                st.info(f"💡 {suggestion}")
 
         # Candidate list for Module 6
         candidates.append(
@@ -156,7 +173,10 @@ def render_resume_uploader():
                 "score": score,
             }
         )
-             # ---------------- Module 6 ----------------
+
+    # ==================================================
+    # Module 6 : Candidate Ranking
+    # ==================================================
 
     if candidates:
 
@@ -164,8 +184,8 @@ def render_resume_uploader():
 
         try:
             ranked_candidates = rank_candidates(candidates)
-        except Exception as e:
-            st.error(e)
+        except Exception as error:
+            st.error(error)
             return
 
         ranking_df = pd.DataFrame(ranked_candidates)
@@ -192,6 +212,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main()             
     
     
